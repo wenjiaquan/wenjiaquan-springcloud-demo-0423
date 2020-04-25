@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wjq.user.mapper.CityMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wjq.user.entity.City">
+        <id column="id" property="id" />
+        <result column="pid" property="pid" />
+        <result column="cityname" property="cityname" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, pid, cityname
+    </sql>
+
+    <select id="findAll" resultMap="mapVo">
+        SELECT
+            c1.id sid,
+            c1. NAME sname,
+            c2.id cid,
+            c2. NAME cname
+        FROM
+            t_city c1
+        LEFT JOIN t_city c2 ON c1.id = c2.pid
+        WHERE
+            c1.pid = 0
+    </select>
+    <resultMap id="mapVo" type="com.wjq.user.entity.CityVo">
+        <id column="sid" property="id" />
+        <result column="sname" property="name" />
+        <collection property="list" ofType="com.wjq.user.entity.CityVo">
+            <id column="cid" property="id" />
+            <result column="cname" property="name" />
+        </collection>
+    </resultMap>
+</mapper>
